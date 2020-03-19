@@ -7,16 +7,17 @@ require 'htmlentities'
 require 'date'
 
 
-def transverse_category (cats)
+def transverse_category (cats, options)
   puts "<ul>"
   cats.each do | category |
-    name = category['name']
-    url = category['url']
+    item  = "<item>"
+    item += "<a href='#{ category['url'] }'>#{ category['name'] }</a>"
+    item += " ( #{ category['countDiscussions'] } Threads" +
+            " | #{ category['countComments'] } Replies)" if options[:stats]
+    item += "</item>"
+    puts item
 
-        
-    puts "<item><a href='#{ url }'>#{ name }</a></item>"
-
-    transverse_category (category['children'])
+    transverse_category(category['children'], options)
   end
   puts "</ul>"
 end
@@ -34,15 +35,21 @@ end
 require 'optparse'
 
 options ={
-  :depth => 100
+  :depth => 100,
+  :stats => false
 }
 
 optparse = OptionParser.new do |opts|
   opts.banner = "Usage: #{$0} SITE ..."
 
-  opts.on("-d", "--depth N", "Site") do |d|
+  opts.on("-d", "--depth N", "Depth of search") do |d|
     options[:depth] = d
   end
+
+  opts.on( '-s', '--stats', 'Include category stats' ) do
+    options[:stats] = true
+  end
+
   
   opts.on( '-h', '--help', 'Display this screen' ) do
     puts opts
@@ -58,7 +65,7 @@ ARGV.each do | site |
   cats = get_categories("https://#{ site}/api/v2/categories?maxDepth=#{ options[:depth] }&archived=false&page=1&limit=100")
 
  
-  transverse_category (cats)
+  transverse_category(cats, options)
 end
   
 puts "</body></html>"
