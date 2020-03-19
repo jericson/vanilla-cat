@@ -4,6 +4,7 @@
 ~~~
 Usage: ./vanilla-cat.rb SITE ...
     -d, --depth N                    Depth of search
+    -s, --stats                      Include category stats
     -h, --help                       Display this screen
 ~~~
 
