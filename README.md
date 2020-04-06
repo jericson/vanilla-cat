@@ -10,3 +10,6 @@ Usage: ./vanilla-cat.rb SITE ...
 
 A simple script to build a catalog page using [Vanilla forum's
 API](https://docs.vanillaforums.com/developer/apiv2-reference/#/Categories).
+
+Sample output:
+* [College Confidential](/college-confidential.html)
