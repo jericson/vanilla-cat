@@ -12,7 +12,7 @@ def transverse_category (cats, options)
   cats.each do | category |
     item  = "<item>"
     item += "<a href='#{ category['url'] }'>#{ category['name'] }</a>"
-    item += " ( #{ category['countDiscussions'] } Threads" +
+    item += " (#{ category['countDiscussions'] } Threads" +
             " | #{ category['countComments'] } Replies)" if options[:stats]
     item += "</item>"
     puts item
